@@ -31,12 +31,14 @@ public class MainFrame extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainFrame.class);
 
     private final BlitzShTerminalWidget terminal;
+    private final BaseConfiguration settings;
 
     private boolean fullscreenActive;
     private Point locationBeforeFullscreen;
     private Dimension sizeBeforeFullscreen;
 
     public MainFrame(BaseConfiguration settings) {
+        this.settings = settings;
         try {
             terminal = new BlitzShTerminalWidget(
                     settings.getColumns(),
@@ -96,7 +98,7 @@ public class MainFrame extends JFrame {
 
                 @Override
                 public void windowOpened(WindowEvent e) {
-                    if (settings.getAlpha() > 0 && settings.getAlpha() < 100) {
+                    if (isAlphaSettingValid(settings)) {
                         System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
                         WindowUtils.setWindowAlpha(MainFrame.this, settings.getAlpha() / 100.0F);
                     }
@@ -128,6 +130,10 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private boolean isAlphaSettingValid(BaseConfiguration settings) {
+        return settings.getAlpha() > 0 && settings.getAlpha() < 100;
+    }
+
     private void toggleFullscreen() {
         if (fullscreenActive) {
             leaveFullscreen();
@@ -154,6 +160,8 @@ public class MainFrame extends JFrame {
 
         fullscreenActive = true;
         setVisible(true);
+
+        WindowUtils.setWindowAlpha(MainFrame.this, 1.0F);
     }
 
     private void leaveFullscreen() {
@@ -168,5 +176,9 @@ public class MainFrame extends JFrame {
         locationBeforeFullscreen = null;
         sizeBeforeFullscreen = null;
         setVisible(true);
+
+        if (isAlphaSettingValid(settings)) {
+            WindowUtils.setWindowAlpha(MainFrame.this, settings.getAlpha() / 100.0F);
+        }
     }
 }

@@ -9,7 +9,7 @@ blitzSh is a graphical interface for various terminals or consoles.
 - Transparency support  
 ![Alt text](/blitzsh.app/screenshots/terminals.png?raw=true "Terminals")
 - SSH Remote Terminals
-- Fullscreen  
+- Fullscreen (F11)  
 ![Alt text](/blitzsh.app/screenshots/fullscreen.png?raw=true "Fullscreen")
 - TrayIcon  
 ![Alt text](/blitzsh.app/screenshots/trayicon.png?raw=true "TrayIcon")
