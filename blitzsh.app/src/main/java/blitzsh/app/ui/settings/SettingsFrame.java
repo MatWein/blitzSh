@@ -168,8 +168,7 @@ public class SettingsFrame extends JFrame {
     private void selectConfiguration(BaseConfiguration configuration) {
         saveAndApplyChanges();
 
-        BorderLayout layout = (BorderLayout)settingsPanel.getLayout();
-        settingsPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+        deselectCurrentConfiguration();
 
         ConfigurationPanel<?> configurationPanel;
         if (configuration instanceof TerminalConfiguration) {
@@ -182,6 +181,14 @@ public class SettingsFrame extends JFrame {
         settingsPanel.revalidate();
 
         currentConfigurationPanel = configurationPanel;
+    }
+
+    private void deselectCurrentConfiguration() {
+        BorderLayout layout = (BorderLayout)settingsPanel.getLayout();
+        settingsPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+        settingsPanel.add(introLabel, BorderLayout.CENTER);
+        settingsPanel.revalidate();
+        settingsPanel.repaint();
     }
 
     private void addChildFolders(TreeViewNode node, List<TerminalConfigurationFolder> folders) {
@@ -291,6 +298,8 @@ public class SettingsFrame extends JFrame {
 
             saveAndApplyChanges();
         }
+
+        deselectCurrentConfiguration();
     }
 
     private JButton createToolbarButton(Icon icon, String tooltip, ActionListener action) {

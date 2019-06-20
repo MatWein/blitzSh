@@ -1,12 +1,13 @@
 package blitzsh.app.settings.model;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TerminalConfiguration extends BaseConfiguration {
     private String[] command;
     private String workingDir;
-    private String charset;
+    private String charset = StandardCharsets.UTF_8.name();
     private Map<String, String> environment = new HashMap<>();
 
     private boolean console;

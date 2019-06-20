@@ -43,6 +43,7 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
         numberTable.setModel(new ConfigurationNumberTableModel(configuration));
         numberTable.getColumnModel().getColumn(0).setHeaderValue(Messages.get(SETTINGS_PANEL_NUMBERS_HEADERS_DESC));
         numberTable.getColumnModel().getColumn(1).setHeaderValue(Messages.get(SETTINGS_PANEL_NUMBERS_HEADERS_VALUE));
+        numberTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         FormGroup<JScrollPane> numbersFormGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_NUMBERS), LEFT_SPACE, 150, new JScrollPane(numberTable));
         mainPanel.add(numbersFormGroup);
 
@@ -53,6 +54,7 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
         colorTable.setDefaultRenderer(Color.class, colorRenderer);
         ColorEditor colorEditor = new ColorEditor();
         colorTable.setDefaultEditor(Color.class, colorEditor);
+        colorTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         colorTable.setModel(new ConfigurationColorTableModel(configuration));
         colorTable.getColumnModel().getColumn(1).setCellRenderer(colorRenderer);
         colorTable.getColumnModel().getColumn(1).setCellEditor(colorEditor);

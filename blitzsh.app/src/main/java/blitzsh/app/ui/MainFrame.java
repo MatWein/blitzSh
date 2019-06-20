@@ -13,6 +13,7 @@ import com.jediterm.terminal.TtyConnector;
 import com.pty4j.PtyProcess;
 import com.pty4j.PtyProcessBuilder;
 import com.sun.jna.platform.WindowUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,9 +74,12 @@ public class MainFrame extends JFrame {
                         .setWindowsAnsiColorEnabled(true)
                         .start();
 
+                this.setTitle(Messages.get(APP_NAME) + " - " + StringUtils.join(terminalConfiguration.getCommand(), " "));
                 processConnector = new PtyProcessTtyConnector(process, Charset.forName(terminalConfiguration.getCharset()));
             } else {
                 var sshConfiguration = (SshConfiguration) settings;
+
+                this.setTitle(Messages.get(APP_NAME) + " - SSH: " + sshConfiguration.getHost());
                 processConnector = new JSchIdentityShellTtyConnector(
                         sshConfiguration.getHost(),
                         sshConfiguration.getPort(),
@@ -119,7 +123,6 @@ public class MainFrame extends JFrame {
 
             this.pack();
             this.setLocationRelativeTo(null);
-            this.setTitle(Messages.get(APP_NAME));
             this.setIconImages(Resources.ICONS);
             this.setResizable(true);
 
