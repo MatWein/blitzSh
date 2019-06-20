@@ -14,6 +14,16 @@ blitzSh is a graphical interface for various terminals or consoles.
 - TrayIcon  
 ![Alt text](/blitzsh.app/screenshots/trayicon.png?raw=true "TrayIcon")
 - Platform independent
+- Search (Ctrl+F)  
+![Alt text](/blitzsh.app/screenshots/search.png?raw=true "Search")
+- Group terminal configurations by creating folders / sub folders
 
 ## Requirements
 - Java Runtime Version 11
+- Windows / Linux / MacOS
+
+## Run application
+To run the application download a binary jar at the release-section of github and double click on the file or run it via: 
+```
+java -jar blitzsh.app-full.jar
+```
