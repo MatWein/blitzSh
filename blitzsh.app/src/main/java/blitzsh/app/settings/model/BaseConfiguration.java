@@ -16,6 +16,10 @@ public class BaseConfiguration implements Serializable, IName {
     private int blinkRate = 505;
     private int alpha = 100;
 
+    private boolean copyOnSelect = true;
+    private boolean pasteOnMiddleMouseClick = true;
+    private boolean pasteOnShiftInsert = true;
+
     private Color terminalBackground = new Color(24, 24, 24);
     private Color terminalForeground = Color.WHITE;
     private Color selectionBackground = new Color(82, 109, 165);
@@ -297,5 +301,29 @@ public class BaseConfiguration implements Serializable, IName {
 
     public void setAlpha(int alpha) {
         this.alpha = alpha;
+    }
+
+    public boolean isCopyOnSelect() {
+        return copyOnSelect;
+    }
+
+    public void setCopyOnSelect(boolean copyOnSelect) {
+        this.copyOnSelect = copyOnSelect;
+    }
+
+    public boolean isPasteOnMiddleMouseClick() {
+        return pasteOnMiddleMouseClick;
+    }
+
+    public void setPasteOnMiddleMouseClick(boolean pasteOnMiddleMouseClick) {
+        this.pasteOnMiddleMouseClick = pasteOnMiddleMouseClick;
+    }
+
+    public boolean isPasteOnShiftInsert() {
+        return pasteOnShiftInsert;
+    }
+
+    public void setPasteOnShiftInsert(boolean pasteOnShiftInsert) {
+        this.pasteOnShiftInsert = pasteOnShiftInsert;
     }
 }

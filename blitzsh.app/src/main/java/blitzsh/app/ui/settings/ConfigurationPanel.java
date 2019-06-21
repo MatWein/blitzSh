@@ -10,7 +10,11 @@ import blitzsh.app.ui.settings.model.ConfigurationNumberTableModel;
 import blitzsh.app.utils.Messages;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.util.function.Consumer;
 
 import static blitzsh.app.utils.Messages.MessageKey.*;
 
@@ -78,5 +82,25 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
 
     public JLabel getHeaderLabel() {
         return headerLabel;
+    }
+
+    protected void addKeyBindingListener(JTextComponent textField, Consumer<String> onChangeAction) {
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                callAction();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                callAction();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                callAction();
+            }
+
+            public void callAction() {
+                onChangeAction.accept(textField.getText());
+            }
+        });
     }
 }

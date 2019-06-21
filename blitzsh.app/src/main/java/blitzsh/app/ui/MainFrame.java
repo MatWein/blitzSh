@@ -23,6 +23,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.nio.charset.Charset;
 
 import static blitzsh.app.utils.Messages.MessageKey.APP_NAME;
@@ -85,8 +86,8 @@ public class MainFrame extends JFrame {
                         sshConfiguration.getPort(),
                         sshConfiguration.getUserName(),
                         sshConfiguration.getPassword(),
-                        sshConfiguration.getPrivateKey(),
-                        sshConfiguration.getPublicKey(),
+                        new File(sshConfiguration.getPrivateKey()),
+                        new File(sshConfiguration.getPublicKey()),
                         sshConfiguration.getPassphraseForPrivateKey());
             }
 

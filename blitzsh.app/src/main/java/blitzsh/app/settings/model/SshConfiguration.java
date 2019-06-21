@@ -1,14 +1,12 @@
 package blitzsh.app.settings.model;
 
-import java.io.File;
-
 public class SshConfiguration extends BaseConfiguration {
     private String host;
     private int port;
     private String userName;
     private String password;
-    private File privateKey;
-    private File publicKey;
+    private String privateKey;
+    private String publicKey;
     private String passphraseForPrivateKey;
 
     public SshConfiguration() {
@@ -50,19 +48,19 @@ public class SshConfiguration extends BaseConfiguration {
         this.password = password;
     }
 
-    public File getPrivateKey() {
+    public String getPrivateKey() {
         return privateKey;
     }
 
-    public void setPrivateKey(File privateKey) {
+    public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
     }
 
-    public File getPublicKey() {
+    public String getPublicKey() {
         return publicKey;
     }
 
-    public void setPublicKey(File publicKey) {
+    public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
     }
 

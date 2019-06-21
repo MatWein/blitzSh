@@ -169,6 +169,7 @@ public class SettingsFrame extends JFrame {
         saveAndApplyChanges();
 
         deselectCurrentConfiguration();
+        removeCenter();
 
         ConfigurationPanel<?> configurationPanel;
         if (configuration instanceof TerminalConfiguration) {
@@ -179,14 +180,22 @@ public class SettingsFrame extends JFrame {
 
         settingsPanel.add(configurationPanel, BorderLayout.CENTER);
         settingsPanel.revalidate();
+        settingsPanel.repaint();
 
         currentConfigurationPanel = configurationPanel;
     }
 
     private void deselectCurrentConfiguration() {
+        removeCenter();
+
+        settingsPanel.add(introLabel, BorderLayout.CENTER);
+        settingsPanel.revalidate();
+        settingsPanel.repaint();
+    }
+
+    private void removeCenter() {
         BorderLayout layout = (BorderLayout)settingsPanel.getLayout();
         settingsPanel.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-        settingsPanel.add(introLabel, BorderLayout.CENTER);
         settingsPanel.revalidate();
         settingsPanel.repaint();
     }
