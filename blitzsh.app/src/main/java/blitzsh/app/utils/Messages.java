@@ -94,7 +94,16 @@ public class Messages {
         SETTINGS_PANEL_NUMBERS_BLINK_RATE("settings.panel.numbers.blinkRate"),
         SETTINGS_PANEL_NUMBERS_ALPHA("settings.panel.numbers.alpha"),
         SETTINGS_PANEL_NUMBERS_HEADERS_DESC("settings.panel.numbers.headers.description"),
-        SETTINGS_PANEL_NUMBERS_HEADERS_VALUE("settings.panel.numbers.headers.value")
+        SETTINGS_PANEL_NUMBERS_HEADERS_VALUE("settings.panel.numbers.headers.value"),
+        SETTINGS_PANEL_SSH_HOST("settings.panel.ssh.host"),
+        SETTINGS_PANEL_SSH_PORT("settings.panel.ssh.port"),
+        SETTINGS_PANEL_SSH_USERNAME("settings.panel.ssh.username"),
+        SETTINGS_PANEL_SSH_PASSWORD("settings.panel.ssh.password"),
+        SETTINGS_PANEL_SSH_PRIVATE_KEY_BROWSE("settings.panel.ssh.privateKey.browse"),
+        SETTINGS_PANEL_SSH_PRIVATE_KEY("settings.panel.ssh.privateKey"),
+        SETTINGS_PANEL_SSH_PUBLIC_KEY_BROWSE("settings.panel.ssh.publicKey.browse"),
+        SETTINGS_PANEL_SSH_PUBLIC_KEY("settings.panel.ssh.publicKey"),
+        SETTINGS_PANEL_SSH_PASSPHRASE("settings.panel.ssh.passphrase")
 
         ;
 

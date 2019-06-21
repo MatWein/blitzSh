@@ -17,6 +17,7 @@ blitzSh is a graphical interface for various terminals or consoles.
 - Search (Ctrl+F)  
 ![Alt text](/blitzsh.app/screenshots/search.png?raw=true "Search")
 - Group terminal configurations by creating folders / sub folders
+- UI support for multiple languages (currently English and German)
 
 ## Requirements
 - Java Runtime Version 11

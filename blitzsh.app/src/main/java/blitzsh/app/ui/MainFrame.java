@@ -86,8 +86,8 @@ public class MainFrame extends JFrame {
                         sshConfiguration.getPort(),
                         sshConfiguration.getUserName(),
                         sshConfiguration.getPassword(),
-                        new File(sshConfiguration.getPrivateKey()),
-                        new File(sshConfiguration.getPublicKey()),
+                        StringUtils.isBlank(sshConfiguration.getPrivateKey()) ? null : new File(sshConfiguration.getPrivateKey()),
+                        StringUtils.isBlank(sshConfiguration.getPublicKey()) ? null : new File(sshConfiguration.getPublicKey()),
                         sshConfiguration.getPassphraseForPrivateKey());
             }
 

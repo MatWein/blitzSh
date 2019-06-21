@@ -45,7 +45,7 @@ public class TrayManager {
 
     private static void createDynamicMenuForFolders(Menu parent, List<TerminalConfigurationFolder> folders) {
         for (TerminalConfigurationFolder folder : folders) {
-            if (folder.getConfigurations().isEmpty() && folder.getFolders().isEmpty()) {
+            if (folder.getConfigurations().isEmpty() && folder.getFolders().isEmpty() && folder.getSshConfigurations().isEmpty()) {
                 continue;
             }
 

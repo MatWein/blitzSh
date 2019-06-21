@@ -2,7 +2,7 @@ package blitzsh.app.settings.model;
 
 public class SshConfiguration extends BaseConfiguration {
     private String host;
-    private int port;
+    private int port = 22;
     private String userName;
     private String password;
     private String privateKey;

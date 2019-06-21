@@ -14,6 +14,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.function.Consumer;
 
 import static blitzsh.app.utils.Messages.MessageKey.*;
@@ -102,5 +104,20 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
                 onChangeAction.accept(textField.getText());
             }
         });
+    }
+
+    protected ActionListener createFileChooseListener(JTextComponent textField, boolean onlyDirectories) {
+        return e -> {
+            JFileChooser chooser = new JFileChooser();
+            if (onlyDirectories) {
+                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            }
+
+            int result = chooser.showOpenDialog(getRootPane());
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = chooser.getSelectedFile();
+                textField.setText(selectedFile.getAbsolutePath());
+            }
+        };
     }
 }

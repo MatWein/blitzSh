@@ -6,10 +6,7 @@ import blitzsh.app.utils.Messages;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,21 +98,6 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
         pasteOnShiftInsertCheckbox.addChangeListener(e -> getConfiguration().setPasteOnShiftInsert(pasteOnShiftInsertCheckbox.isSelected()));
         FormGroup<JCheckBox> pasteOnShiftInsertGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_PASTE_ON_SHIFT_INSERT), LEFT_SPACE, pasteOnShiftInsertCheckbox);
         mainPanel.add(pasteOnShiftInsertGroup);
-    }
-
-    private ActionListener createFileChooseListener(JTextComponent textField, boolean onlyDirectories) {
-        return e -> {
-            JFileChooser chooser = new JFileChooser();
-            if (onlyDirectories) {
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            }
-
-            int result = chooser.showOpenDialog(getRootPane());
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = chooser.getSelectedFile();
-                textField.setText(selectedFile.getAbsolutePath());
-            }
-        };
     }
 
     private Map<String, String> parseEnvironment(String value) {
