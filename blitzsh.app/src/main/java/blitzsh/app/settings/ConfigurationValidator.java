@@ -53,7 +53,6 @@ public class ConfigurationValidator {
 
             result &= StringUtils.isNotBlank(sshConfiguration.getHost());
             result &= StringUtils.isNotBlank(sshConfiguration.getUserName());
-            result &= StringUtils.isNotBlank(sshConfiguration.getPassword());
             result &= sshConfiguration.getPort() > MIN_PORT;
             result &= sshConfiguration.getPort() < MAX_PORT;
         }

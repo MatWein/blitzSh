@@ -2,25 +2,16 @@ package com.jediterm.ssh.jsch;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 public class JSchIdentityShellTtyConnector extends JSchShellTtyConnector {
-    private File privateKey;
-    private File publicKey;
-    private String passphraseForPrivateKey;
-
-    public JSchIdentityShellTtyConnector() {
-    }
-
-    public JSchIdentityShellTtyConnector(String host, String user, String password) {
-        super(host, user, password);
-    }
-
-    public JSchIdentityShellTtyConnector(String host, int port, String user, String password) {
-        super(host, port, user, password);
-    }
+    private final File privateKey;
+    private final File publicKey;
+    private final String passphraseForPrivateKey;
 
     public JSchIdentityShellTtyConnector(String host, int port, String user, String password, File privateKey, File publicKey, String passphraseForPrivateKey) {
         super(host, port, user, password);
@@ -38,5 +29,12 @@ public class JSchIdentityShellTtyConnector extends JSchShellTtyConnector {
                     publicKey == null ? null : publicKey.getAbsolutePath(),
                     passphraseForPrivateKey.getBytes(StandardCharsets.UTF_8));
         }
+    }
+
+    @Override
+    protected void configureSession(Session session, Properties config) throws JSchException {
+        super.configureSession(session, config);
+
+        session.setUserInfo(new UserInfoWrapper(session.getUserInfo()));
     }
 }

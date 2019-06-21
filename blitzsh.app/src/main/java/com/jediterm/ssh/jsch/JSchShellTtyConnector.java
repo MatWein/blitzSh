@@ -5,10 +5,6 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 public class JSchShellTtyConnector extends JSchTtyConnector<ChannelShell> {
-
-    public JSchShellTtyConnector() {
-    }
-
     public JSchShellTtyConnector(String host, String user, String password) {
         super(host, DEFAULT_PORT, user, password);
     }
