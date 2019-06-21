@@ -23,7 +23,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.nio.charset.Charset;
 
 import static blitzsh.app.utils.Messages.MessageKey.APP_NAME;
@@ -81,14 +80,7 @@ public class MainFrame extends JFrame {
                 var sshConfiguration = (SshConfiguration) settings;
 
                 this.setTitle(Messages.get(APP_NAME) + " - SSH: " + sshConfiguration.getHost());
-                processConnector = new JSchIdentityShellTtyConnector(
-                        sshConfiguration.getHost(),
-                        sshConfiguration.getPort(),
-                        sshConfiguration.getUserName(),
-                        sshConfiguration.getPassword(),
-                        StringUtils.isBlank(sshConfiguration.getPrivateKey()) ? null : new File(sshConfiguration.getPrivateKey()),
-                        StringUtils.isBlank(sshConfiguration.getPublicKey()) ? null : new File(sshConfiguration.getPublicKey()),
-                        sshConfiguration.getPassphraseForPrivateKey());
+                processConnector = new JSchIdentityShellTtyConnector(sshConfiguration);
             }
 
             terminal.createTerminalSession(processConnector);

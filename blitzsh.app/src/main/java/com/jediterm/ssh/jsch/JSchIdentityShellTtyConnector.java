@@ -1,24 +1,28 @@
 package com.jediterm.ssh.jsch;
 
+import blitzsh.app.settings.model.SshConfiguration;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class JSchIdentityShellTtyConnector extends JSchShellTtyConnector {
+    private final SshConfiguration configuration;
     private final File privateKey;
     private final File publicKey;
     private final String passphraseForPrivateKey;
 
-    public JSchIdentityShellTtyConnector(String host, int port, String user, String password, File privateKey, File publicKey, String passphraseForPrivateKey) {
-        super(host, port, user, password);
+    public JSchIdentityShellTtyConnector(SshConfiguration configuration) {
+        super(configuration.getHost(), configuration.getPort(), configuration.getUserName(), configuration.getPassword());
 
-        this.privateKey = privateKey;
-        this.publicKey = publicKey;
-        this.passphraseForPrivateKey = passphraseForPrivateKey;
+        this.configuration = configuration;
+        this.privateKey = StringUtils.isBlank(configuration.getPrivateKey()) ? null : new File(configuration.getPrivateKey());
+        this.publicKey = StringUtils.isBlank(configuration.getPublicKey()) ? null : new File(configuration.getPublicKey());
+        this.passphraseForPrivateKey = configuration.getPassphraseForPrivateKey();
     }
 
     @Override
@@ -35,6 +39,6 @@ public class JSchIdentityShellTtyConnector extends JSchShellTtyConnector {
     protected void configureSession(Session session, Properties config) throws JSchException {
         super.configureSession(session, config);
 
-        session.setUserInfo(new UserInfoWrapper(session.getUserInfo()));
+        session.setUserInfo(new UserInfoWrapper(configuration, session.getUserInfo()));
     }
 }

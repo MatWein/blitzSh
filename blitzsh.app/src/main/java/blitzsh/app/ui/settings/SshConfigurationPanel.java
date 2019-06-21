@@ -58,5 +58,29 @@ public class SshConfigurationPanel extends ConfigurationPanel<SshConfiguration> 
         addKeyBindingListener(passphraseTextfield, (newValue) -> getConfiguration().setPassphraseForPrivateKey(newValue));
         FormGroup<JPasswordField> passphraseGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_PASSPHRASE), LEFT_SPACE, passphraseTextfield);
         mainPanel.add(passphraseGroup);
+
+        JCheckBox promptIdentityYesNoCheckbox = new JCheckBox();
+        promptIdentityYesNoCheckbox.setSelected(getConfiguration().isPromptIdentityYesNo());
+        promptIdentityYesNoCheckbox.addChangeListener(e -> getConfiguration().setPromptIdentityYesNo(promptIdentityYesNoCheckbox.isSelected()));
+        FormGroup<JCheckBox> promptIdentityYesNoGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_PROMPT_IDENTITY_YES_NO), LEFT_SPACE, promptIdentityYesNoCheckbox);
+        mainPanel.add(promptIdentityYesNoGroup);
+
+        JCheckBox promptPassphraseCheckbox = new JCheckBox();
+        promptPassphraseCheckbox.setSelected(getConfiguration().isPromptPassphrase());
+        promptPassphraseCheckbox.addChangeListener(e -> getConfiguration().setPromptPassphrase(promptPassphraseCheckbox.isSelected()));
+        FormGroup<JCheckBox> promptPassphraseGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_PROMPT_PASSPHRASE), LEFT_SPACE, promptPassphraseCheckbox);
+        mainPanel.add(promptPassphraseGroup);
+
+        JCheckBox promptPasswordCheckbox = new JCheckBox();
+        promptPasswordCheckbox.setSelected(getConfiguration().isPromptPassword());
+        promptPasswordCheckbox.addChangeListener(e -> getConfiguration().setPromptPassword(promptPasswordCheckbox.isSelected()));
+        FormGroup<JCheckBox> promptPasswordGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_PROMPT_PASSWORD), LEFT_SPACE, promptPasswordCheckbox);
+        mainPanel.add(promptPasswordGroup);
+
+        JCheckBox promptMessagesCheckbox = new JCheckBox();
+        promptMessagesCheckbox.setSelected(getConfiguration().isPromptMessages());
+        promptMessagesCheckbox.addChangeListener(e -> getConfiguration().setPromptMessages(promptMessagesCheckbox.isSelected()));
+        FormGroup<JCheckBox> promptMessagesGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_PROMPT_MESSAGES), LEFT_SPACE, promptMessagesCheckbox);
+        mainPanel.add(promptMessagesGroup);
     }
 }

@@ -103,7 +103,11 @@ public class Messages {
         SETTINGS_PANEL_SSH_PRIVATE_KEY("settings.panel.ssh.privateKey"),
         SETTINGS_PANEL_SSH_PUBLIC_KEY_BROWSE("settings.panel.ssh.publicKey.browse"),
         SETTINGS_PANEL_SSH_PUBLIC_KEY("settings.panel.ssh.publicKey"),
-        SETTINGS_PANEL_SSH_PASSPHRASE("settings.panel.ssh.passphrase")
+        SETTINGS_PANEL_SSH_PASSPHRASE("settings.panel.ssh.passphrase"),
+        SETTINGS_PANEL_SSH_PROMPT_IDENTITY_YES_NO("settings.panel.ssh.prompt.identityYesNo"),
+        SETTINGS_PANEL_SSH_PROMPT_PASSPHRASE("settings.panel.ssh.prompt.passphrase"),
+        SETTINGS_PANEL_SSH_PROMPT_PASSWORD("settings.panel.ssh.prompt.password"),
+        SETTINGS_PANEL_SSH_PROMPT_MESSAGES("settings.panel.ssh.prompt.messages")
 
         ;
 

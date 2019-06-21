@@ -9,6 +9,11 @@ public class SshConfiguration extends BaseConfiguration {
     private String publicKey;
     private String passphraseForPrivateKey;
 
+    private boolean promptIdentityYesNo = false;
+    private boolean promptPassphrase = false;
+    private boolean promptPassword = false;
+    private boolean promptMessages = false;
+
     public SshConfiguration() {
     }
 
@@ -70,5 +75,37 @@ public class SshConfiguration extends BaseConfiguration {
 
     public void setPassphraseForPrivateKey(String passphraseForPrivateKey) {
         this.passphraseForPrivateKey = passphraseForPrivateKey;
+    }
+
+    public boolean isPromptIdentityYesNo() {
+        return promptIdentityYesNo;
+    }
+
+    public void setPromptIdentityYesNo(boolean promptIdentityYesNo) {
+        this.promptIdentityYesNo = promptIdentityYesNo;
+    }
+
+    public boolean isPromptPassphrase() {
+        return promptPassphrase;
+    }
+
+    public void setPromptPassphrase(boolean promptPassphrase) {
+        this.promptPassphrase = promptPassphrase;
+    }
+
+    public boolean isPromptPassword() {
+        return promptPassword;
+    }
+
+    public void setPromptPassword(boolean promptPassword) {
+        this.promptPassword = promptPassword;
+    }
+
+    public boolean isPromptMessages() {
+        return promptMessages;
+    }
+
+    public void setPromptMessages(boolean promptMessages) {
+        this.promptMessages = promptMessages;
     }
 }

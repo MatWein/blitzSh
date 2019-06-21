@@ -1,11 +1,14 @@
 package com.jediterm.ssh.jsch;
 
+import blitzsh.app.settings.model.SshConfiguration;
 import com.jcraft.jsch.UserInfo;
 
 public class UserInfoWrapper implements UserInfo {
+    private final SshConfiguration configuration;
     private final UserInfo userInfo;
 
-    public UserInfoWrapper(UserInfo userInfo) {
+    public UserInfoWrapper(SshConfiguration configuration, UserInfo userInfo) {
+        this.configuration = configuration;
         this.userInfo = userInfo;
     }
 
@@ -21,21 +24,31 @@ public class UserInfoWrapper implements UserInfo {
 
     @Override
     public boolean promptPassword(String message) {
-        return userInfo.promptPassword(message);
-    }
+        if (configuration.isPromptPassword()) {
+            return userInfo.promptPassword(message);
+        }
 
-    @Override
-    public boolean promptPassphrase(String message) {
-        return userInfo.promptPassphrase(message);
-    }
-
-    @Override
-    public boolean promptYesNo(String message) {
         return true;
     }
 
     @Override
+    public boolean promptPassphrase(String message) {
+        if (configuration.isPromptPassphrase()) {
+            return userInfo.promptPassphrase(message);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean promptYesNo(String message) {
+        return !configuration.isPromptIdentityYesNo();
+    }
+
+    @Override
     public void showMessage(String message) {
-        userInfo.showMessage(message);
+        if (configuration.isPromptMessages()) {
+            userInfo.showMessage(message);
+        }
     }
 }
