@@ -42,7 +42,11 @@ public class UserInfoWrapper implements UserInfo {
 
     @Override
     public boolean promptYesNo(String message) {
-        return !configuration.isPromptIdentityYesNo();
+        if (configuration.isPromptIdentityYesNo()) {
+            return userInfo.promptYesNo(message);
+        }
+
+        return true;
     }
 
     @Override
