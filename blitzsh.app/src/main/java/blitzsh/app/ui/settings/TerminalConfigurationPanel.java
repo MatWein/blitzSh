@@ -16,6 +16,8 @@ import static blitzsh.app.help.ShellManTerminalHelpUpdater.splitLines;
 import static blitzsh.app.utils.Messages.MessageKey.*;
 
 public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfiguration> {
+    public static final String COMMAND_SPLIT_REGEX = " (?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+
     public TerminalConfigurationPanel(TerminalConfiguration configuration) {
         super(configuration);
     }
@@ -23,7 +25,7 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
     @Override
     protected void initPanel(JPanel mainPanel) {
         JTextField commandTextfield = new JTextField(StringUtils.join(getConfiguration().getCommand()));
-        addKeyBindingListener(commandTextfield, (newValue) -> getConfiguration().setCommand(new String[] { newValue }));
+        addKeyBindingListener(commandTextfield, (newValue) -> getConfiguration().setCommand(splitCommand(newValue)));
         JButton commandBrowseButton = new JButton(Messages.get(SETTINGS_PANEL_COMMAND_BROWSE));
         commandBrowseButton.addActionListener(createFileChooseListener(commandTextfield, false));
         FormGroup<JTextField> commandFormGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_COMMAND), LEFT_SPACE, commandTextfield, commandBrowseButton);
@@ -114,5 +116,12 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
         return environment.entrySet().stream()
                 .map((entry) -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    static String[] splitCommand(String command) {
+        return Arrays.stream(command.split(COMMAND_SPLIT_REGEX))
+                .map((in) -> StringUtils.removeStart(in, "\""))
+                .map((in) -> StringUtils.removeEnd(in, "\""))
+                .toArray(String[]::new);
     }
 }
