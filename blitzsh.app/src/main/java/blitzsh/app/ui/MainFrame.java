@@ -100,6 +100,10 @@ public class MainFrame extends JFrame {
                         WindowUtils.setWindowAlpha(MainFrame.this, settings.getAlpha() / 100.0F);
                     }
 
+                    if (!processConnector.isConnected()) {
+                        return;
+                    }
+
                     Thread thread = new Thread(() -> {
                         try {
                             processConnector.waitFor();

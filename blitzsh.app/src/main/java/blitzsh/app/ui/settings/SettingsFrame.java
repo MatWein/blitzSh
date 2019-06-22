@@ -1,6 +1,7 @@
 package blitzsh.app.ui.settings;
 
 import blitzsh.app.Resources;
+import blitzsh.app.common.components.Separator;
 import blitzsh.app.common.components.treeview.JTreeView;
 import blitzsh.app.common.components.treeview.TreeViewNode;
 import blitzsh.app.settings.SettingsManager;
@@ -11,6 +12,7 @@ import blitzsh.app.settings.model.TerminalConfigurationFolder;
 import blitzsh.app.ui.TrayManager;
 import blitzsh.app.utils.Messages;
 import blitzsh.app.utils.interfaces.IName;
+import org.apache.commons.lang3.SerializationUtils;
 
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
@@ -43,6 +45,7 @@ public class SettingsFrame extends JFrame {
     private final JButton addSshConfigButton;
     private final JButton addFolderButton;
     private final JButton removeSelectedNodeButton;
+    private final JButton copySelectedNodeButton;
 
     private ConfigurationPanel<?> currentConfigurationPanel;
 
@@ -67,6 +70,7 @@ public class SettingsFrame extends JFrame {
         addSshConfigButton = createToolbarButton(Resources.SSH_PLUS, Messages.get(SETTINGS_TOOLBAR_ADD_SSH_CONFIG), (e) -> addSshConfiguration());
         addFolderButton = createToolbarButton(Resources.FOLDER_PLUS, Messages.get(SETTINGS_TOOLBAR_ADD_FOLDER), (e) -> addFolder());
         removeSelectedNodeButton = createToolbarButton(Resources.MINUS, Messages.get(SETTINGS_TOOLBAR_REMOVE), (e) -> removeSelected());
+        copySelectedNodeButton = createToolbarButton(Resources.COPY, Messages.get(SETTINGS_TOOLBAR_COPY), (e) -> copySelected());
 
         treeToolbar = new JToolBar();
         treeToolbar.setFloatable(false);
@@ -74,6 +78,8 @@ public class SettingsFrame extends JFrame {
         treeToolbar.add(addSshConfigButton);
         treeToolbar.add(addFolderButton);
         treeToolbar.add(removeSelectedNodeButton);
+        treeToolbar.add(new Separator(JSeparator.VERTICAL));
+        treeToolbar.add(copySelectedNodeButton);
 
         var rootNode = new TreeViewNode(Messages.get(SETTINGS_TREE_ROOT_NODE), terminalConfigurations);
         rootNode.setIcon(Resources.FOLDER);
@@ -89,15 +95,20 @@ public class SettingsFrame extends JFrame {
             addSshConfigButton.setEnabled(true);
             addFolderButton.setEnabled(true);
             removeSelectedNodeButton.setEnabled(true);
+            copySelectedNodeButton.setEnabled(true);
 
             if (selectedNode.isEmpty()) {
                 removeSelectedNodeButton.setEnabled(false);
+                copySelectedNodeButton.setEnabled(false);
             } else if (selectedNode.get().getData() instanceof BaseConfiguration) {
                 addFolderButton.setEnabled(false);
                 addConfigButton.setEnabled(false);
                 addSshConfigButton.setEnabled(false);
             } else if (selectedNode.get().isRoot()) {
                 removeSelectedNodeButton.setEnabled(false);
+                copySelectedNodeButton.setEnabled(false);
+            } else if (selectedNode.get().getData() instanceof TerminalConfigurationFolder) {
+                copySelectedNodeButton.setEnabled(false);
             }
         });
 
@@ -229,6 +240,10 @@ public class SettingsFrame extends JFrame {
         var configName = Messages.get(SETTINGS_TREE_NEW_CONFIG);
         var newConfig = new TerminalConfiguration(configName);
 
+        addConfiguration(selectedNode, configName, newConfig);
+    }
+
+    private void addConfiguration(Optional<TreeViewNode> selectedNode, String configName, TerminalConfiguration newConfig) {
         var newConfigNode = new TreeViewNode(configName, newConfig);
         newConfigNode.setIcon(Resources.BLITZSH_16);
 
@@ -251,6 +266,10 @@ public class SettingsFrame extends JFrame {
         var configName = Messages.get(SETTINGS_TREE_NEW_SSH_CONFIG);
         var newConfig = new SshConfiguration(configName);
 
+        addSshConfiguration(selectedNode, configName, newConfig);
+    }
+
+    private void addSshConfiguration(Optional<TreeViewNode> selectedNode, String configName, SshConfiguration newConfig) {
         var newConfigNode = new TreeViewNode(configName, newConfig);
         newConfigNode.setIcon(Resources.SSH);
 
@@ -284,6 +303,31 @@ public class SettingsFrame extends JFrame {
         saveAndApplyChanges();
 
         treeView.startEditingAtNode(newFolderNode);
+    }
+
+    private void copySelected() {
+        Optional<TreeViewNode> selectedNode = treeView.getLastSelectedPathComponent();
+        if (selectedNode.isEmpty()) {
+            return;
+        }
+
+        if (!(selectedNode.get().getData() instanceof BaseConfiguration)) {
+            return;
+        }
+
+        TreeViewNode parent = selectedNode.get().getParent();
+        if (parent == null) {
+            return;
+        }
+
+        BaseConfiguration configToCopy = (BaseConfiguration) selectedNode.get().getData();
+        BaseConfiguration clonedConfig = SerializationUtils.clone(configToCopy);
+
+        if (configToCopy instanceof TerminalConfiguration) {
+            addConfiguration(Optional.of(parent), configToCopy.getName(), (TerminalConfiguration)clonedConfig);
+        } else {
+            addSshConfiguration(Optional.of(parent), configToCopy.getName(), (SshConfiguration)clonedConfig);
+        }
     }
 
     private void removeSelected() {

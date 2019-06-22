@@ -31,6 +31,7 @@ public class Resources {
     public static final ImageIcon SSH_PLUS = new ImageIcon(Resources.class.getResource("/icons/common/plus-ssh.png"));
     public static final ImageIcon FOLDER_PLUS = new ImageIcon(Resources.class.getResource("/icons/common/folder-plus.png"));
     public static final ImageIcon MINUS = new ImageIcon(Resources.class.getResource("/icons/common/minus.png"));
+    public static final ImageIcon COPY = new ImageIcon(Resources.class.getResource("/icons/common/copy.png"));
     public static final ImageIcon SSH = new ImageIcon(Resources.class.getResource("/icons/common/ssh.png"));
     public static Image SSH_IMAGE;
 

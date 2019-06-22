@@ -41,6 +41,7 @@ public class Messages {
         SETTINGS_TOOLBAR_ADD_SSH_CONFIG("settings.toolbar.addSshConfig"),
         SETTINGS_TOOLBAR_REMOVE("settings.toolbar.remove"),
         SETTINGS_TOOLBAR_REMOVE_QUESTION("settings.toolbar.remove.question"),
+        SETTINGS_TOOLBAR_COPY("settings.toolbar.copy"),
         SETTINGS_TREE_ROOT_NODE("settings.tree.rootNode"),
         SETTINGS_TREE_NEW_FOLDER("settings.tree.newFolder"),
         SETTINGS_TREE_NEW_CONFIG("settings.tree.newConfig"),

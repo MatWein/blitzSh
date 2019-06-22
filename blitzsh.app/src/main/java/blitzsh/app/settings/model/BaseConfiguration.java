@@ -6,7 +6,7 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class BaseConfiguration implements Serializable, IName {
+public abstract class BaseConfiguration implements Serializable, IName {
     private String id = UUID.randomUUID().toString();
     private String name;
 
