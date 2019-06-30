@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>./../../../target/blitzsh-app-full.jar</jar>
+  <outfile>./../../../target/blitzsh-app-full.exe</outfile>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <icon>./../../../src/test/resources/img/blitzSh.ico</icon>
+  <singleInstance>
+    <mutexName>blitzsh_mutex</mutexName>
+    <windowTitle>blitzSh</windowTitle>
+  </singleInstance>
+  <jre>
+    <path>jre</path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>true</bundledJreAsFallback>
+    <minVersion>11</minVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>0.0.3.0</fileVersion>
+    <txtFileVersion>0.0.3</txtFileVersion>
+    <fileDescription>blitzSh</fileDescription>
+    <copyright>Copyright(C) 2019</copyright>
+    <productVersion>0.0.3.0</productVersion>
+    <txtProductVersion>0.0.3</txtProductVersion>
+    <productName>blitzSh</productName>
+    <internalName>blitzSh</internalName>
+    <originalFilename>blitzsh-app-full.exe</originalFilename>
+    <language>GERMAN</language>
+  </versionInfo>
+</launch4jConfig>
