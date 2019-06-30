@@ -17,6 +17,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -87,6 +88,10 @@ public class SettingsFrame extends JFrame {
 
         treeView = new JTreeView(rootNode);
         treeView.setEditable(true);
+        treeView.setDragEnabled(true);
+        treeView.setDropMode(DropMode.ON_OR_INSERT);
+        treeView.setTransferHandler(new SettingsTransferHandler(terminalConfigurations));
+        treeView.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         treeView.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         treeView.getSelectionModel().addTreeSelectionListener(e -> {
             Optional<TreeViewNode> selectedNode = treeView.getLastSelectedPathComponent();
