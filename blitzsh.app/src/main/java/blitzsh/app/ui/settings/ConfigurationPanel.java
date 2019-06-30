@@ -5,6 +5,7 @@ import blitzsh.app.common.components.Separator;
 import blitzsh.app.common.components.table.ColorEditor;
 import blitzsh.app.common.components.table.ColorRenderer;
 import blitzsh.app.settings.model.BaseConfiguration;
+import blitzsh.app.settings.model.TerminalConfiguration;
 import blitzsh.app.ui.settings.model.ConfigurationColorTableModel;
 import blitzsh.app.ui.settings.model.ConfigurationNumberTableModel;
 import blitzsh.app.utils.Messages;
@@ -53,6 +54,25 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
         FormGroup<JScrollPane> numbersFormGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_NUMBERS), LEFT_SPACE, 150, new JScrollPane(numberTable));
         mainPanel.add(numbersFormGroup);
 
+        JButton resetNumbersButton = new JButton(Messages.get(SETTINGS_PANEL_RESET_VALUES));
+        resetNumbersButton.addActionListener((e) -> {
+            TerminalConfiguration newConfig = new TerminalConfiguration();
+
+            configuration.setAlpha(newConfig.getAlpha());
+            configuration.setBlinkRate(newConfig.getBlinkRate());
+            configuration.setBufferMaxLinesCount(newConfig.getBufferMaxLinesCount());
+            configuration.setColumns(newConfig.getColumns());
+            configuration.setLines(newConfig.getLines());
+
+            numberTable.revalidate();
+            numberTable.repaint();
+        });
+        Box resetNumbersButtonBox = Box.createHorizontalBox();
+        resetNumbersButtonBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        resetNumbersButtonBox.add(Box.createHorizontalGlue());
+        resetNumbersButtonBox.add(resetNumbersButton);
+        mainPanel.add(resetNumbersButtonBox);
+
         JTable colorTable = new JTable();
         colorTable.setFillsViewportHeight(true);
         colorTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -68,6 +88,44 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
         colorTable.getColumnModel().getColumn(1).setHeaderValue(Messages.get(SETTINGS_PANEL_COLORS_HEADERS_VALUE));
         FormGroup<JScrollPane> colorFormGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_COLORS), LEFT_SPACE, 150, new JScrollPane(colorTable));
         mainPanel.add(colorFormGroup);
+
+        JButton resetColorsButton = new JButton(Messages.get(SETTINGS_PANEL_RESET_VALUES));
+        resetColorsButton.addActionListener((e) -> {
+            TerminalConfiguration newConfig = new TerminalConfiguration();
+            
+            configuration.setTerminalBackground(newConfig.getTerminalBackground());
+            configuration.setTerminalForeground(newConfig.getTerminalForeground());
+            configuration.setSelectionBackground(newConfig.getSelectionBackground());
+            configuration.setSelectionForeground(newConfig.getSelectionForeground());
+            configuration.setFoundPatternBackground(newConfig.getFoundPatternBackground());
+            configuration.setFoundPatternForeground(newConfig.getFoundPatternForeground());
+            configuration.setHyperlinkBackground(newConfig.getHyperlinkBackground());
+            configuration.setHyperlinkForeground(newConfig.getHyperlinkForeground());
+            configuration.setMappingBlack(newConfig.getMappingBlack());
+            configuration.setMappingRed(newConfig.getMappingRed());
+            configuration.setMappingGreen(newConfig.getMappingGreen());
+            configuration.setMappingYellow(newConfig.getMappingYellow());
+            configuration.setMappingBlue(newConfig.getMappingBlue());
+            configuration.setMappingMagenta(newConfig.getMappingMagenta());
+            configuration.setMappingCyan(newConfig.getMappingCyan());
+            configuration.setMappingWhite(newConfig.getMappingWhite());
+            configuration.setMappingBrightBlack(newConfig.getMappingBrightBlack());
+            configuration.setMappingBrightRed(newConfig.getMappingBrightRed());
+            configuration.setMappingBrightGreen(newConfig.getMappingBrightGreen());
+            configuration.setMappingBrightYellow(newConfig.getMappingBrightYellow());
+            configuration.setMappingBrightBlue(newConfig.getMappingBrightBlue());
+            configuration.setMappingBrightMagenta(newConfig.getMappingBrightMagenta());
+            configuration.setMappingBrightCyan(newConfig.getMappingBrightCyan());
+            configuration.setMappingBrightWhite(newConfig.getMappingBrightWhite());
+
+            colorTable.revalidate();
+            colorTable.repaint();
+        });
+        Box resetColorsButtonBox = Box.createHorizontalBox();
+        resetColorsButtonBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        resetColorsButtonBox.add(Box.createHorizontalGlue());
+        resetColorsButtonBox.add(resetColorsButton);
+        mainPanel.add(resetColorsButtonBox);
 
         mainPanel.add(Box.createVerticalStrut(10));
 

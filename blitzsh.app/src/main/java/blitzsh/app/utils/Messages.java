@@ -48,6 +48,7 @@ public class Messages {
         SETTINGS_TREE_NEW_SSH_CONFIG("settings.tree.newSshConfig"),
         SETTINGS_INTRO("settings.intro"),
         SETTINGS_PANEL_COMMAND("settings.panel.command"),
+        SETTINGS_PANEL_RESET_VALUES("settings.panel.resetValues"),
         SETTINGS_PANEL_COMMAND_BROWSE("settings.panel.command.browse"),
         SETTINGS_PANEL_WORKING_DIR("settings.panel.workingDir"),
         SETTINGS_PANEL_WORKING_DIR_BROWSE("settings.panel.workingDir.browse"),
