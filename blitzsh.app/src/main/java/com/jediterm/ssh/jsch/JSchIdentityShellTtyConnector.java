@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class JSchIdentityShellTtyConnector extends JSchShellTtyConnector {
     private final SshConfiguration configuration;
@@ -40,5 +41,10 @@ public class JSchIdentityShellTtyConnector extends JSchShellTtyConnector {
         super.configureSession(session, config);
 
         session.setUserInfo(new UserInfoWrapper(configuration, session.getUserInfo()));
+        session.setDaemonThread(true);
+
+        if (configuration.isKeepSshSessionAlive()) {
+            session.setServerAliveInterval((int)TimeUnit.SECONDS.toMillis(60));
+        }
     }
 }

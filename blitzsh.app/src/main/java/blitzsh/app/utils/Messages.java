@@ -109,7 +109,14 @@ public class Messages {
         SETTINGS_PANEL_SSH_PROMPT_IDENTITY_YES_NO("settings.panel.ssh.prompt.identityYesNo"),
         SETTINGS_PANEL_SSH_PROMPT_PASSPHRASE("settings.panel.ssh.prompt.passphrase"),
         SETTINGS_PANEL_SSH_PROMPT_PASSWORD("settings.panel.ssh.prompt.password"),
-        SETTINGS_PANEL_SSH_PROMPT_MESSAGES("settings.panel.ssh.prompt.messages")
+        SETTINGS_PANEL_SSH_PROMPT_MESSAGES("settings.panel.ssh.prompt.messages"),
+        SETTINGS_PANEL_SSH_KEEP_SESSION_ALIVE("settings.panel.ssh.keepSessionAlive"),
+        SETTINGS_TABS_APP("settings.tabs.app"),
+        SETTINGS_TABS_CONFIGS("settings.tabs.configs"),
+        SETTINGS_APP_ENCRYPT_SETTINGS("settings.app.encryptSettings"),
+
+        PASSWORD_MANAGER_QUESTION("password.manager.question"),
+        PASSWORD_MANAGER_INVALID("password.manager.invalid"),
 
         ;
 

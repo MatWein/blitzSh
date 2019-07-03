@@ -5,10 +5,7 @@ import blitzsh.app.common.components.Separator;
 import blitzsh.app.common.components.treeview.JTreeView;
 import blitzsh.app.common.components.treeview.TreeViewNode;
 import blitzsh.app.settings.SettingsManager;
-import blitzsh.app.settings.model.BaseConfiguration;
-import blitzsh.app.settings.model.SshConfiguration;
-import blitzsh.app.settings.model.TerminalConfiguration;
-import blitzsh.app.settings.model.TerminalConfigurationFolder;
+import blitzsh.app.settings.model.*;
 import blitzsh.app.ui.TrayManager;
 import blitzsh.app.utils.Messages;
 import blitzsh.app.utils.interfaces.IName;
@@ -32,6 +29,7 @@ public class SettingsFrame extends JFrame {
     public static SettingsFrame INSTANCE = new SettingsFrame();
 
     private final TerminalConfigurationFolder terminalConfigurations;
+    private final AppConfiguration appSettings;
 
     private final JLabel introLabel;
 
@@ -52,6 +50,7 @@ public class SettingsFrame extends JFrame {
 
     private SettingsFrame() {
         this.terminalConfigurations = SettingsManager.loadTerminalConfigurations();
+        this.appSettings = SettingsManager.loadAppConfiguration();
 
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -172,11 +171,30 @@ public class SettingsFrame extends JFrame {
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePanel, settingsPanel);
         splitPane.setResizeWeight(0.2);
+        splitPane.setBackground(Color.WHITE);
 
-        this.add(splitPane, BorderLayout.CENTER);
+        JPanel appConfigPane = new JPanel();
+        appConfigPane.setBackground(Color.WHITE);
+        appConfigPane.setLayout(new BoxLayout(appConfigPane, BoxLayout.Y_AXIS));
+        appConfigPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JCheckBox encryptSettingsCheckbox = new JCheckBox(Messages.get(SETTINGS_APP_ENCRYPT_SETTINGS));
+        encryptSettingsCheckbox.setSelected(appSettings.isEncryptSettings());
+        encryptSettingsCheckbox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        encryptSettingsCheckbox.setBackground(appConfigPane.getBackground());
+        encryptSettingsCheckbox.addChangeListener(e -> appSettings.setEncryptSettings(encryptSettingsCheckbox.isSelected()));
+
+        appConfigPane.add(encryptSettingsCheckbox);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab(Messages.get(SETTINGS_TABS_APP), appConfigPane);
+        tabbedPane.addTab(Messages.get(SETTINGS_TABS_CONFIGS), splitPane);
+
+        this.add(tabbedPane, BorderLayout.CENTER);
     }
 
     private void saveAndApplyChanges() {
+        SettingsManager.saveAppConfiguration(appSettings);
         SettingsManager.saveTerminalConfigurations(terminalConfigurations);
         TrayManager.reloadMenu();
     }

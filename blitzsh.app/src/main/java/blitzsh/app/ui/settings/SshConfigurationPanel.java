@@ -82,5 +82,11 @@ public class SshConfigurationPanel extends ConfigurationPanel<SshConfiguration> 
         promptMessagesCheckbox.addChangeListener(e -> getConfiguration().setPromptMessages(promptMessagesCheckbox.isSelected()));
         FormGroup<JCheckBox> promptMessagesGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_PROMPT_MESSAGES), LEFT_SPACE, promptMessagesCheckbox);
         mainPanel.add(promptMessagesGroup);
+
+        JCheckBox keepSshSessionAliveCheckbox = new JCheckBox();
+        keepSshSessionAliveCheckbox.setSelected(getConfiguration().isKeepSshSessionAlive());
+        keepSshSessionAliveCheckbox.addChangeListener(e -> getConfiguration().setKeepSshSessionAlive(keepSshSessionAliveCheckbox.isSelected()));
+        FormGroup<JCheckBox> keepSshSessionAliveGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_SSH_KEEP_SESSION_ALIVE), LEFT_SPACE, keepSshSessionAliveCheckbox);
+        mainPanel.add(keepSshSessionAliveGroup);
     }
 }
