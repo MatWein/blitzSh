@@ -351,6 +351,7 @@ public class SettingsFrame extends JFrame {
             TerminalConfigurationFolder parentFolder = (TerminalConfigurationFolder)parent.getData();
             parentFolder.getFolders().remove(selectedNode.get().getData());
             parentFolder.getConfigurations().remove(selectedNode.get().getData());
+            parentFolder.getSshConfigurations().remove(selectedNode.get().getData());
 
             treeView.removeNode(selectedNode.get());
 
