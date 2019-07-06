@@ -27,8 +27,11 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
 
     @Override
     protected void initPanel(JPanel mainPanel) {
-        JComboBox<String> commandTextfield = new JComboBox<>(calculateItems());
+        prefillConfiguration();
+
+        JComboBox<String> commandTextfield = new JComboBox<>(calculateCommands());
         commandTextfield.setEditable(true);
+        commandTextfield.setSelectedItem(getCommand());
         JTextField editorComponent = (JTextField) commandTextfield.getEditor().getEditorComponent();
         addKeyBindingListener(editorComponent, (newValue) -> getConfiguration().setCommand(splitCommand(newValue)));
         JButton commandBrowseButton = new JButton(Messages.get(SETTINGS_PANEL_COMMAND_BROWSE));
@@ -107,7 +110,33 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
         mainPanel.add(pasteOnShiftInsertGroup);
     }
 
-    private String[] calculateItems() {
+    private void prefillConfiguration() {
+        if (StringUtils.isBlank(getCommand())) {
+            String[] possibleCommands = calculateCommands();
+            if (possibleCommands.length > 0) {
+                getConfiguration().setCommand(splitCommand(possibleCommands[0]));
+            }
+        }
+
+        if (StringUtils.isBlank(getConfiguration().getWorkingDir())) {
+            String workingDir = calculateWorkingDir();
+            getConfiguration().setWorkingDir(workingDir);
+        }
+    }
+
+    private String calculateWorkingDir() {
+        String workingDir = getConfiguration().getWorkingDir();
+        if (StringUtils.isBlank(workingDir)) {
+            File dir = new File("/");
+            if (dir.isDirectory()) {
+                return dir.getAbsolutePath();
+            }
+        }
+
+        return workingDir;
+    }
+
+    private String[] calculateCommands() {
         List<String> commands = new ArrayList<>();
 
         for (String shellLocation : SHELL_LOCATIONS) {

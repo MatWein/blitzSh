@@ -97,6 +97,8 @@ public class Messages {
         SETTINGS_PANEL_NUMBERS_ALPHA("settings.panel.numbers.alpha"),
         SETTINGS_PANEL_NUMBERS_HEADERS_DESC("settings.panel.numbers.headers.description"),
         SETTINGS_PANEL_NUMBERS_HEADERS_VALUE("settings.panel.numbers.headers.value"),
+        SETTINGS_PANEL_NUMBERS_FONT("settings.panel.numbers.font"),
+        SETTINGS_PANEL_NUMBERS_FONT_SIZE("settings.panel.numbers.fontSize"),
         SETTINGS_PANEL_SSH_HOST("settings.panel.ssh.host"),
         SETTINGS_PANEL_SSH_PORT("settings.panel.ssh.port"),
         SETTINGS_PANEL_SSH_USERNAME("settings.panel.ssh.username"),

@@ -63,6 +63,8 @@ public abstract class ConfigurationPanel<T extends BaseConfiguration> extends JP
             configuration.setBufferMaxLinesCount(newConfig.getBufferMaxLinesCount());
             configuration.setColumns(newConfig.getColumns());
             configuration.setLines(newConfig.getLines());
+            configuration.setFont(newConfig.getFont());
+            configuration.setFontSize(newConfig.getFontSize());
 
             numberTable.revalidate();
             numberTable.repaint();

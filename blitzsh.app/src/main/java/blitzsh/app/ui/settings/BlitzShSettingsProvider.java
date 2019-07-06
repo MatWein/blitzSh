@@ -6,6 +6,7 @@ import com.jediterm.terminal.TextStyle;
 import com.jediterm.terminal.emulator.ColorPalette;
 import com.jediterm.terminal.ui.UIUtil;
 import com.jediterm.terminal.ui.settings.DefaultSettingsProvider;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,5 +106,20 @@ public class BlitzShSettingsProvider extends DefaultSettingsProvider {
         } else {
             return super.getPasteKeyStrokes();
         }
+    }
+
+    @Override
+    public Font getTerminalFont() {
+        String font = settings.getFont();
+        if (StringUtils.isBlank(font) || BaseConfiguration.DEFAULT_FONT.equalsIgnoreCase(font)) {
+            return super.getTerminalFont();
+        }
+
+        return Font.decode(font).deriveFont(getTerminalFontSize());
+    }
+
+    @Override
+    public float getTerminalFontSize() {
+        return settings.getFontSize();
     }
 }

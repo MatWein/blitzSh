@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public abstract class BaseConfiguration implements Serializable, IName {
+    public static final String DEFAULT_FONT = "default";
+
     private String id = UUID.randomUUID().toString();
     private String name;
 
@@ -19,6 +21,9 @@ public abstract class BaseConfiguration implements Serializable, IName {
     private boolean copyOnSelect = true;
     private boolean pasteOnMiddleMouseClick = true;
     private boolean pasteOnShiftInsert = true;
+
+    private String font = DEFAULT_FONT;
+    private float fontSize = 14;
 
     private Color terminalBackground = new Color(24, 24, 24);
     private Color terminalForeground = Color.WHITE;
@@ -325,5 +330,21 @@ public abstract class BaseConfiguration implements Serializable, IName {
 
     public void setPasteOnShiftInsert(boolean pasteOnShiftInsert) {
         this.pasteOnShiftInsert = pasteOnShiftInsert;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
+    }
+
+    public float getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(float fontSize) {
+        this.fontSize = fontSize;
     }
 }
