@@ -7,9 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static blitzsh.app.help.ShellManTerminalHelpUpdater.splitLines;
@@ -18,17 +18,22 @@ import static blitzsh.app.utils.Messages.MessageKey.*;
 public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfiguration> {
     public static final String COMMAND_SPLIT_REGEX = " (?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
+    private static final String[] SHELL_LOCATIONS = new String[] { "C:\\Windows\\System32", "C:\\Windows\\System32\\WindowsPowerShell\\v1.0", "/bin", "/usr/bin" };
+    private static final String[] SHELL_EXECUTABLES = new String[] { "cmd.exe", "bash.exe", "bash", "powershell.exe" };
+
     public TerminalConfigurationPanel(TerminalConfiguration configuration) {
         super(configuration);
     }
 
     @Override
     protected void initPanel(JPanel mainPanel) {
-        JTextField commandTextfield = new JTextField(StringUtils.join(getConfiguration().getCommand()));
-        addKeyBindingListener(commandTextfield, (newValue) -> getConfiguration().setCommand(splitCommand(newValue)));
+        JComboBox<String> commandTextfield = new JComboBox<>(calculateItems());
+        commandTextfield.setEditable(true);
+        JTextField editorComponent = (JTextField) commandTextfield.getEditor().getEditorComponent();
+        addKeyBindingListener(editorComponent, (newValue) -> getConfiguration().setCommand(splitCommand(newValue)));
         JButton commandBrowseButton = new JButton(Messages.get(SETTINGS_PANEL_COMMAND_BROWSE));
-        commandBrowseButton.addActionListener(createFileChooseListener(commandTextfield, false));
-        FormGroup<JTextField> commandFormGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_COMMAND), LEFT_SPACE, commandTextfield, commandBrowseButton);
+        commandBrowseButton.addActionListener(createFileChooseListener(editorComponent, false));
+        FormGroup<JComboBox<String>> commandFormGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_COMMAND), LEFT_SPACE, commandTextfield, commandBrowseButton);
         mainPanel.add(commandFormGroup);
 
         JTextField workingDirTextfield = new JTextField(getConfiguration().getWorkingDir());
@@ -100,6 +105,27 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
         pasteOnShiftInsertCheckbox.addChangeListener(e -> getConfiguration().setPasteOnShiftInsert(pasteOnShiftInsertCheckbox.isSelected()));
         FormGroup<JCheckBox> pasteOnShiftInsertGroup = new FormGroup<>(Messages.get(SETTINGS_PANEL_PASTE_ON_SHIFT_INSERT), LEFT_SPACE, pasteOnShiftInsertCheckbox);
         mainPanel.add(pasteOnShiftInsertGroup);
+    }
+
+    private String[] calculateItems() {
+        List<String> commands = new ArrayList<>();
+
+        commands.add(getCommand());
+
+        for (String shellLocation : SHELL_LOCATIONS) {
+            for (String shellExecutable : SHELL_EXECUTABLES) {
+                File executable = new File(shellLocation, shellExecutable);
+                if (executable.isFile()) {
+                    commands.add(executable.getAbsolutePath());
+                }
+            }
+        }
+
+        return commands.toArray(new String[] {});
+    }
+
+    private String getCommand() {
+        return StringUtils.join(getConfiguration().getCommand());
     }
 
     private Map<String, String> parseEnvironment(String value) {
