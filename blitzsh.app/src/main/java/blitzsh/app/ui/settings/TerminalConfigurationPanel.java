@@ -110,8 +110,6 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
     private String[] calculateItems() {
         List<String> commands = new ArrayList<>();
 
-        commands.add(getCommand());
-
         for (String shellLocation : SHELL_LOCATIONS) {
             for (String shellExecutable : SHELL_EXECUTABLES) {
                 File executable = new File(shellLocation, shellExecutable);
@@ -119,6 +117,11 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
                     commands.add(executable.getAbsolutePath());
                 }
             }
+        }
+
+        String currentCommand = getCommand();
+        if (StringUtils.isNotBlank(currentCommand) && !commands.contains(currentCommand)) {
+            commands.add(0, currentCommand);
         }
 
         return commands.toArray(new String[] {});
