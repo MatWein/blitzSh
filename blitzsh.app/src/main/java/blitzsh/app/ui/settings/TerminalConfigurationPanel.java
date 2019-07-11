@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static blitzsh.app.help.ShellManTerminalHelpUpdater.splitLines;
 import static blitzsh.app.utils.Messages.MessageKey.*;
 
 public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfiguration> {
@@ -181,5 +180,9 @@ public class TerminalConfigurationPanel extends ConfigurationPanel<TerminalConfi
                 .map((in) -> StringUtils.removeStart(in, "\""))
                 .map((in) -> StringUtils.removeEnd(in, "\""))
                 .toArray(String[]::new);
+    }
+
+    private String[] splitLines(String str) {
+        return str.split("\r\n|\r|\n");
     }
 }
