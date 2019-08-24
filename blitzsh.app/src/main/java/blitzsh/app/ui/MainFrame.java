@@ -7,12 +7,12 @@ import blitzsh.app.settings.model.TerminalConfiguration;
 import blitzsh.app.ui.settings.BlitzShSettingsProvider;
 import blitzsh.app.ui.terminal.BlitzShTerminalWidget;
 import blitzsh.app.utils.Messages;
+import blitzsh.app.utils.WindowUtils;
 import com.jediterm.pty.PtyProcessTtyConnector;
 import com.jediterm.ssh.jsch.JSchIdentityShellTtyConnector;
 import com.jediterm.terminal.TtyConnector;
 import com.pty4j.PtyProcess;
 import com.pty4j.PtyProcessBuilder;
-import com.sun.jna.platform.WindowUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,8 +96,7 @@ public class MainFrame extends JFrame {
                 @Override
                 public void windowOpened(WindowEvent e) {
                     if (isAlphaSettingValid(settings)) {
-                        System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
-                        WindowUtils.setWindowAlpha(MainFrame.this, settings.getAlpha() / 100.0F);
+                        WindowUtils.applyWindowTransparency(MainFrame.this, settings.getAlpha());
                     }
 
                     if (!processConnector.isConnected()) {
@@ -161,7 +160,7 @@ public class MainFrame extends JFrame {
         fullscreenActive = true;
         setVisible(true);
 
-        WindowUtils.setWindowAlpha(MainFrame.this, 1.0F);
+        WindowUtils.applyWindowTransparency(MainFrame.this, 100);
     }
 
     private void leaveFullscreen() {
@@ -178,7 +177,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
 
         if (isAlphaSettingValid(settings)) {
-            WindowUtils.setWindowAlpha(MainFrame.this, settings.getAlpha() / 100.0F);
+            WindowUtils.applyWindowTransparency(MainFrame.this, settings.getAlpha());
         }
     }
 }
