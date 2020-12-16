@@ -28,3 +28,9 @@ To run the application download a binary jar at the release-section of github an
 ```
 java -jar blitzsh.app-full.jar
 ```
+
+## Known issues
+If the application does not show a tray icon on linux try to add the following jvm args:  
+```
+-Djdk.gtk.version=3
+```

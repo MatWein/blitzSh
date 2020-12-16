@@ -1,9 +1,11 @@
 package blitzsh.app.ui.settings;
 
 import blitzsh.app.settings.model.BaseConfiguration;
+import com.google.common.collect.Lists;
 import com.jediterm.terminal.TerminalColor;
 import com.jediterm.terminal.TextStyle;
 import com.jediterm.terminal.emulator.ColorPalette;
+import com.jediterm.terminal.ui.TerminalActionPresentation;
 import com.jediterm.terminal.ui.UIUtil;
 import com.jediterm.terminal.ui.settings.DefaultSettingsProvider;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class BlitzShSettingsProvider extends DefaultSettingsProvider {
     private final BaseConfiguration settings;
@@ -94,17 +97,18 @@ public class BlitzShSettingsProvider extends DefaultSettingsProvider {
     public boolean pasteOnMiddleMouseClick() {
         return settings.isPasteOnMiddleMouseClick();
     }
-
+    
     @Override
-    public KeyStroke[] getPasteKeyStrokes() {
+    public TerminalActionPresentation getPasteActionPresentation() {
         if (settings.isPasteOnShiftInsert()) {
             KeyStroke macOsKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK);
             KeyStroke windowsKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
             KeyStroke shiftInsertKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, InputEvent.SHIFT_DOWN_MASK);
-
-            return new KeyStroke[] { (UIUtil.isMac ? macOsKeyStroke : windowsKeyStroke), shiftInsertKeyStroke };
+    
+            List<KeyStroke> keyStrokes = Lists.newArrayList(UIUtil.isMac ? macOsKeyStroke : windowsKeyStroke, shiftInsertKeyStroke);
+            return new TerminalActionPresentation("Paste", keyStrokes);
         } else {
-            return super.getPasteKeyStrokes();
+            return super.getPasteActionPresentation();
         }
     }
 
